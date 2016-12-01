@@ -92,6 +92,7 @@ before_script:
   - mkdir ../tmp
   - ls ../
   - ls ../bin
+  - which java
   - selenium-server-standalone -port 4444 -log ../tmp/selenium2.log &
   - sleep 5
   - cd ./profiles/lightning
