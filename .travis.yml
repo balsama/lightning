@@ -1,7 +1,6 @@
 sudo: required
 dist: trusty
 language: php
-group: deprecated
 
 cache:
   bundler: true
@@ -22,15 +21,13 @@ env:
 addons:
   apt:
     packages:
-    # Trusty does not include MySQL by default.
-    - mysql-server-5.6
-    - mysql-client-core-5.6
-    - mysql-client-5.6
     # Dependencies for Chrome.
     - libappindicator1
     - fonts-liberation
 
 before_install:
+  - sudo service mysqld start
+  - sudo service mysql start
   - phpenv config-rm xdebug.ini
   - composer self-update
   - composer --version
