@@ -62,7 +62,7 @@ install:
   - export COMPOSER_EXIT_ON_PATCH_FAILURE=1
 
   # Create the MySQL database and add a user for testing.
-  - mysql -u root -e 'CREATE DATABASE drupal; CREATE USER 'lightning'@'localhost' IDENTIFIED BY 'lightning'; GRANT ALL ON drupal.* TO 'lightning'@'localhost'
+  - mysql -u root -e "CREATE DATABASE drupal; CREATE USER 'lightning'@'localhost' IDENTIFIED BY 'lightning'; GRANT ALL ON drupal.* TO 'lightning'@'localhost';"
 
   # PHP conf tweaks
   - echo 'max_execution_time = 120' >> drupal.php.ini;
