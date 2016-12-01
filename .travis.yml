@@ -30,8 +30,7 @@ addons:
     - fonts-liberation
 
 before_install:
-  - sudo service mysql stop
-  - sudo service mysql start
+  - sudo service mysql restart
   - phpenv config-rm xdebug.ini
   - composer self-update
   - composer --version
