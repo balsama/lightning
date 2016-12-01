@@ -11,7 +11,7 @@
 
   <!-- Database credentials. -->
   <property name="db.type" value="mysql" />
-  <property name="db.host" value="127.0.0.1" />
+  <property name="db.host" value="localhost" />
   <property name="db.user" value="root" />
   <property name="db.password" value="" />
   <property name="db.database" value="lightning" />
