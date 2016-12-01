@@ -13,7 +13,7 @@
   <property name="db.type" value="mysql" />
   <property name="db.host" value="127.0.0.1" />
   <property name="db.user" value="root" />
-  <property name="db.password" value="root" />
+  <property name="db.password" value="" />
   <property name="db.database" value="lightning" />
   <property name="db.url" value="${db.type}://${db.user}:${db.password}@${db.host}/${db.database}" />
 
