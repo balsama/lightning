@@ -21,6 +21,10 @@ env:
 addons:
   apt:
     packages:
+    # Trusty does not include MySQL by default.
+    - mysql-server-5.6
+    - mysql-client-core-5.6
+    - mysql-client-5.6
     # Dependencies for Chrome.
     - libappindicator1
     - fonts-liberation
@@ -72,7 +76,7 @@ install:
   # Build the Lightning code base.
   - composer install
   # Install Lightning cleanly so that settings.php will be created properly.
-  - phing install -Ddb.database=drupal
+  - phing install -Ddb.database=drupal -Ddb.host=127.0.0.1
   # Import the fixture, if it exists.
   - phing remember -Dversion=$VERSION -Ddb.database=drupal
   - cd docroot
