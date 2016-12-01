@@ -21,10 +21,6 @@ env:
 addons:
   apt:
     packages:
-    # Trusty does not include MySQL by default.
-    - mysql-server-5.6
-    - mysql-client-core-5.6
-    - mysql-client-5.6
     # Dependencies for Chrome.
     - libappindicator1
     - fonts-liberation
@@ -88,12 +84,9 @@ install:
 
 before_script:
   - drush runserver --default-server=builtin 8080 &>/dev/null &
+  - jdk_switcher use oraclejdk8
   # Start Selenium and dump its ginormous log into a temporary file.
   - mkdir ../tmp
-  - ls ../
-  - ls ../bin
-  - jdk_switcher use oraclejdk8
-  - which java
   - selenium-server-standalone -port 4444 -log ../tmp/selenium2.log &
   - sleep 5
   - cd ./profiles/lightning
