@@ -63,3 +63,18 @@ Feature: Workflow moderation states
     And I should not see "Graham Chapman"
     And I should not see "Terry Jones"
     And I should see "Eric Idle"
+
+  @2841646
+  Scenario: Creating a new draft of published content creates a forward revision, leaving the existing published revision as default.
+    Given I am logged in as a user with the "use draft_published transition,use published_draft transition,create page content,edit any page content,create url aliases,view any unpublished content,view latest version" permissions
+    And page content:
+      | title             | path   | moderation_state |
+      | Moderation Test 5 | /mod-5 | published        |
+    And I visit "/mod-5"
+    And I click "New draft"
+    And I select "Draft" from "Moderation state"
+    And I press "Save"
+    Then I should see "Latest version"
+    And I visit "/user/logout"
+    And I go to "/mod-5"
+    And the response status code should be 200

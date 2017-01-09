@@ -1,0 +1,16 @@
+diff --git a/src/Entity/Storage/ContentEntityStorageTrait.php b/src/Entity/Storage/ContentEntityStorageTrait.php
+index d9830cf..08b4951 100644
+--- a/src/Entity/Storage/ContentEntityStorageTrait.php
++++ b/src/Entity/Storage/ContentEntityStorageTrait.php
+@@ -298,7 +298,10 @@ trait ContentEntityStorageTrait {
+         $default_rev = $tree->getDefaultRevision($entity->uuid());
+ 
+         if ($entity->_rev->value == $default_rev) {
+-          $entity->isDefaultRevision(TRUE);
++          // See https://www.drupal.org/node/2841646
++          // This seems to return true for the latest revision always. Even if
++          //the latest revision is a draft and a previous revision is published.
++          //$entity->isDefaultRevision(TRUE);
+         }
+         // @todo: {@link https://www.drupal.org/node/2597538 Needs test.}
+         else {
