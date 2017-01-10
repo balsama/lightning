@@ -45,7 +45,6 @@ projects[metatag][version] = 1.0-beta12
 projects[multiversion][type] = module
 projects[multiversion][patch][] = https://www.drupal.org/files/issues/2822915-2.patch
 projects[multiversion][patch][] = https://www.drupal.org/files/issues/2825477-2.patch
-projects[multiversion][patch][] = 2841646-forward-revisions.patch
 projects[multiversion][version] = 1.0-alpha12
 projects[page_manager][type] = module
 projects[page_manager][version] = 1.0-alpha24

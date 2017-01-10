@@ -6,14 +6,16 @@
 # of this key will disable the Lightning Select Extensions form. If you want to
 # allow users to choose which Lightning Extensions should be enabled during
 # installation, comment out the following lines.
-lightning_extensions:
-  - lightning_workflow
-  - lightning_layout
-  - lightning_media
+lightning_extensions: []
+  # - lightning_workflow
+  # - lightning_layout
+  # - lightning_media
   # - lightning_preview
 
 # List of additional modules to enable after Lightning is installed.
-modules: []
+modules:
+  - content_moderation
+  # - multiversion
 
 # In the components key of their info file, Lightning components may list
 # additional sub-components to be installed. To override this behavior, you can
