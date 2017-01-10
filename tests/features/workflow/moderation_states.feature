@@ -72,8 +72,7 @@ Feature: Workflow moderation states
       | Moderation Test 5 | /mod-5 | published        |
     And I visit "/mod-5"
     And I click "New draft"
-    And I select "Draft" from "Moderation state"
-    And I press "Save"
+    And I press "Save and Create New Draft"
     Then I should see "Latest version"
     And I visit "/user/logout"
     And I go to "/mod-5"
