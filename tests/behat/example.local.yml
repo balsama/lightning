@@ -2,7 +2,7 @@ default:
   extensions:
     Behat\MinkExtension:
       # If necessary, change this to the actual URL of your Lightning site.
-      base_url: 'http://127.0.0.1:8080'
+      base_url: 'http://localhost/balsama-lightning/docroot'
       selenium2:
         wd_host: 'http://127.0.0.1:4444/wd/hub'
         browser: chrome
@@ -10,4 +10,5 @@ default:
       drupal:
         # This assumes that we're running Behat from within
         # DRUPAL_ROOT/profiles/lightning.
-        drupal_root: '../../'
+        drupal_root: '../../docroot/'
+launch-selenium: false

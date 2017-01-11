@@ -2,7 +2,7 @@ default:
   suites:
     default:
       paths:
-        - '%paths.base%/tests/features'
+        - '%paths.base%/../tests/features'
       contexts:
         - Drupal\DrupalExtension\Context\DrupalContext
         - Drupal\DrupalExtension\Context\MinkContext
@@ -19,10 +19,10 @@ default:
         alias: self
       subcontexts:
         paths:
-          - tests/features/bootstrap
-          - src/LightningExtension/Context
+          - '%paths.base%/../features/bootstrap'
+          - '%paths.base%/../../src/LightningExtension/Context'
         autoload: false
       selectors:
         login_form_selector: '#user-login-form'
 imports:
-  - behat.local.yml
+  - local.yml
