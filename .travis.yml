@@ -84,6 +84,7 @@ install:
   - drush pm-enable --yes diff lightning_contact_form lightning_preview
   # Execute database updates, if there are any.
   - drush updatedb --yes
+  - cd ../
 
 before_script:
   - blt update -Dcreate_alias=false -Dbin.path=bin
