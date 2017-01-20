@@ -86,17 +86,13 @@ install:
   - drush updatedb --yes
 
 before_script:
-  - drush runserver --default-server=builtin 8080 &>/dev/null &
+  - blt update -Dcreate_alias=false -Dbin.path=bin
   - jdk_switcher use oraclejdk8
-  # Start Selenium and dump its ginormous log into a temporary file.
-  - mkdir ../tmp
-  - selenium-server-standalone -port 4444 -log ../tmp/selenium2.log &
-  - sleep 5
-  - cd ./profiles/lightning
 
 script:
   - composer validate --no-check-all --ansi
-  - behat --strict --stop-on-failure
+  - blt ci:setup -Dcreate_alias=false -Dbin.path=bin
+  - blt test:behat -Dbehat.run-server=true -Dbin.path=bin
 
 matrix:
   fast_finish: true
