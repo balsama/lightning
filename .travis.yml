@@ -2,6 +2,11 @@ sudo: required
 dist: trusty
 language: php
 
+addons:
+  sauce_connect:
+    username: "pipelines"
+    access_key: "70c642c9-b9f4-4439-8816-9372dab0d6d0"
+
 cache:
   bundler: true
   apt: true
@@ -85,10 +90,8 @@ install:
 before_script:
   - drush runserver --default-server=builtin 8080 &>/dev/null &
   - jdk_switcher use oraclejdk8
-  # Start Selenium and dump its ginormous log into a temporary file.
-  - mkdir ../tmp
-  - selenium-server-standalone -port 4444 -log ../tmp/selenium2.log &
-  - sleep 5
+  # Start Sauce Connect - a magical rainbow tunnel.
+  - curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash
   - cd ./profiles/lightning
 
 script:
