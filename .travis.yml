@@ -2,11 +2,6 @@ sudo: required
 dist: trusty
 language: php
 
-addons:
-  sauce_connect:
-    username: "pipelines"
-    access_key: "70c642c9-b9f4-4439-8816-9372dab0d6d0"
-
 cache:
   bundler: true
   apt: true
@@ -22,8 +17,11 @@ env:
   - VERSION=2.0.2
   - VERSION=2.0.1
   - VERSION=2.0.0
+  - SAUCE_USERNAME=pipelines
+  - SAUCE_ACCESS_KEY=70c642c9-b9f4-4439-8816-9372dab0d6d0
 
 addons:
+  sauce_connect: true
   apt:
     packages:
     # Dependencies for Chrome.
