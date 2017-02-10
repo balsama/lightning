@@ -69,8 +69,6 @@ install:
   # Build the Lightning code base.
   - composer install
   - cd docroot
-  # Execute database updates, if there are any.
-  - drush updatedb --yes
 
 before_script:
   # Start Sauce Connect - a magical rainbow tunnel.
