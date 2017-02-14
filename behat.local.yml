@@ -6,7 +6,7 @@ default:
       selenium2:
         wd_host: 'pipelines:70c642c9-b9f4-4439-8816-9372dab0d6d0@ondemand.saucelabs.com/wd/hub'
         browser: "firefox"
-        capabilities: { "platform": "Windows 10", "browser": "firefox", "max-duration" : 7200}
+        capabilities: { "platform": "Windows 10", "browser": "firefox"}
     Drupal\DrupalExtension:
       drupal:
         # This assumes that we're running Behat from within
