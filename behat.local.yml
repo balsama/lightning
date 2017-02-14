@@ -2,7 +2,7 @@ default:
   extensions:
     Behat\MinkExtension:
       # If necessary, change this to the actual URL of your Lightning site.
-      base_url: 'http://lightningblt2a8zfgdhxxn.devcloud.acquia-sites.com/'
+      base_url: 'http://127.0.0.1:8080'
       selenium2:
         wd_host: 'pipelines:70c642c9-b9f4-4439-8816-9372dab0d6d0@ondemand.saucelabs.com/wd/hub'
         browser: "firefox"
