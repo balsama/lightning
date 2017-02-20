@@ -1,7 +1,7 @@
 @lightning @media @api @javascript @errors
 Feature: Media asset browsers for CKEditor and image fields
 
-  @test_module
+  @test_module @saucelabs
   Scenario: Uploading an image from within the media browser
     Given I am logged in as a user with the media_manager role
     When I visit "/entity-browser/iframe/media_browser"
@@ -11,7 +11,7 @@ Feature: Media asset browsers for CKEditor and image fields
     And I visit "/admin/content/media"
     Then I should see "Foobazzz"
 
-  @test_module
+  @test_module @saucelabs
   Scenario: Uploading a document from within the media browser
     Given I am logged in as a user with the media_manager role
     When I visit "/entity-browser/iframe/media_browser"
@@ -61,7 +61,7 @@ Feature: Media asset browsers for CKEditor and image fields
     And I visit "/admin/content/media"
     Then I should see "Drupal Does LSD"
 
-  @test_module
+  @test_module @saucelabs
   Scenario: Uploading an image through the image browser
     Given I am logged in as a user with the page_creator role
     When I visit "/node/add/page"

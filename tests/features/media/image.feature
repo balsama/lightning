@@ -2,7 +2,7 @@
 Feature: Image media assets
   A media asset representing a locally hosted image.
 
-  @javascript
+  @javascript @saucelabs
   Scenario: Creating an image
     Given I am logged in as a user with the media_creator role
     When I visit "/media/add/image"
