@@ -68,7 +68,7 @@ function content_translation_workflow_entity_presave(EntityInterface $entity) {
 
   // Ensures to sync over translations to never have an unpublished version.
   /** @var \Drupal\node\NodeInterface $original */
-  if ($node->getRevisionId() && ($original = $node_storage->loadRevision($node->getRevisionId())) && $original->hasTranslation($node->language()->getId())) {
+  if ($node->getLoadedRevisionId() && ($original = $node_storage->loadRevision($node->getLoadedRevisionId())) && $original->hasTranslation($node->language()->getId())) {
     $original = $original->getTranslation($node->language()->getId());
     /** @var \Drupal\node\NodeInterface $default_node */
     $default_node = $node_storage->load($node->id())->getTranslation($node->language()->getId());

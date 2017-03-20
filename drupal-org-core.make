@@ -5,3 +5,4 @@ projects[drupal][version] = 8.2.7
 projects[drupal][patch][] = https://www.drupal.org/files/issues/2652138.patch
 projects[drupal][patch][] = https://www.drupal.org/files/issues/2765525-30-8.2.x.patch
 projects[drupal][patch][] = https://www.drupal.org/files/issues/1356276-276-8.2.x.patch
+projects[drupal][patch][] = https://www.drupal.org/files/issues/2809227-140.patch
