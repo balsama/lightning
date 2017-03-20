@@ -1,7 +1,14 @@
 @lightning @workflow @multilingual @api
 Feature: Tests Lightning Workflow when more than one language is present.
 
-  Scenario: Editing draft of LanguageA does not affect existing content of LanguageB
+  Scenario: Editing draft of LanguageA does not affect existing published content of LanguageB when that content has a forward revision.
+    # See #2766957 and #2768615. This test is basically pseudocode ATM and needs
+    # to have step definitions created. But it does outline how to recreate the
+    # problem.
+    #
+    # Also, this test requires forward revisions so it won't work with Lightning
+    # Preview enabled (at least not until #2842471 is resolved. So it will
+    # ultimately need to be commented out for now.
     Given I am logged in as a user with the administrator role
     And I enable the "Language, Content Translation" modules
     And I add the Filipino language
