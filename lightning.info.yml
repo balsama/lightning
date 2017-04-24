@@ -6,35 +6,9 @@ version: '8.x-2.12'
 distribution:
   name: Lightning
 dependencies:
-  - block_content
-  - breakpoint
-  - ckeditor
-  - config
-  - contextual
-  - menu_link_content
-  - datetime
-  - quickedit
-  - editor
   - entity_reference
   - entity_block
-  - help
-  - history
-  - image
-  - menu_ui
-  - node
-  - options
-  - path
-  - page_cache
-  - taxonomy
   - text
-  - dblog
-  - shortcut
-  - toolbar
-  - field_ui
-  - file
-  - rdf
-  - views
-  - views_ui
   - diff
   - metatag
   - lightning_core
@@ -54,3 +28,12 @@ dependencies:
 themes:
   - bartik
   - seven
+
+base profile:
+  name: standard
+  excluded_dependencies:
+    - automated_cron
+    - tour
+    - search
+    - comment
+    - color
