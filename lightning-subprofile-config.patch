@@ -1,0 +1,60 @@
+diff --git a/core/profiles/standard/config/install/block.block.bartik_search.yml b/core/profiles/standard/config/optional/block.block.bartik_search.yml
+similarity index 100%
+rename from core/profiles/standard/config/install/block.block.bartik_search.yml
+rename to core/profiles/standard/config/optional/block.block.bartik_search.yml
+diff --git a/core/profiles/standard/config/install/comment.type.comment.yml b/core/profiles/standard/config/optional/comment.type.comment.yml
+similarity index 100%
+rename from core/profiles/standard/config/install/comment.type.comment.yml
+rename to core/profiles/standard/config/optional/comment.type.comment.yml
+diff --git a/core/profiles/standard/config/install/core.entity_form_display.comment.comment.default.yml b/core/profiles/standard/config/optional/core.entity_form_display.comment.comment.default.yml
+similarity index 100%
+rename from core/profiles/standard/config/install/core.entity_form_display.comment.comment.default.yml
+rename to core/profiles/standard/config/optional/core.entity_form_display.comment.comment.default.yml
+diff --git a/core/profiles/standard/config/install/core.entity_form_display.node.article.default.yml b/core/profiles/standard/config/optional/core.entity_form_display.node.article.default.yml
+similarity index 100%
+rename from core/profiles/standard/config/install/core.entity_form_display.node.article.default.yml
+rename to core/profiles/standard/config/optional/core.entity_form_display.node.article.default.yml
+diff --git a/core/profiles/standard/config/install/core.entity_view_display.comment.comment.default.yml b/core/profiles/standard/config/optional/core.entity_view_display.comment.comment.default.yml
+similarity index 100%
+rename from core/profiles/standard/config/install/core.entity_view_display.comment.comment.default.yml
+rename to core/profiles/standard/config/optional/core.entity_view_display.comment.comment.default.yml
+diff --git a/core/profiles/standard/config/install/core.entity_view_display.node.article.default.yml b/core/profiles/standard/config/optional/core.entity_view_display.node.article.default.yml
+similarity index 100%
+rename from core/profiles/standard/config/install/core.entity_view_display.node.article.default.yml
+rename to core/profiles/standard/config/optional/core.entity_view_display.node.article.default.yml
+diff --git a/core/profiles/standard/config/install/core.entity_view_display.node.article.rss.yml b/core/profiles/standard/config/optional/core.entity_view_display.node.article.rss.yml
+similarity index 100%
+rename from core/profiles/standard/config/install/core.entity_view_display.node.article.rss.yml
+rename to core/profiles/standard/config/optional/core.entity_view_display.node.article.rss.yml
+diff --git a/core/profiles/standard/config/install/core.entity_view_display.node.article.teaser.yml b/core/profiles/standard/config/optional/core.entity_view_display.node.article.teaser.yml
+similarity index 100%
+rename from core/profiles/standard/config/install/core.entity_view_display.node.article.teaser.yml
+rename to core/profiles/standard/config/optional/core.entity_view_display.node.article.teaser.yml
+diff --git a/core/profiles/standard/config/install/field.field.comment.comment.comment_body.yml b/core/profiles/standard/config/optional/field.field.comment.comment.comment_body.yml
+similarity index 100%
+rename from core/profiles/standard/config/install/field.field.comment.comment.comment_body.yml
+rename to core/profiles/standard/config/optional/field.field.comment.comment.comment_body.yml
+diff --git a/core/profiles/standard/config/install/field.field.node.article.body.yml b/core/profiles/standard/config/optional/field.field.node.article.body.yml
+similarity index 100%
+rename from core/profiles/standard/config/install/field.field.node.article.body.yml
+rename to core/profiles/standard/config/optional/field.field.node.article.body.yml
+diff --git a/core/profiles/standard/config/install/field.field.node.article.comment.yml b/core/profiles/standard/config/optional/field.field.node.article.comment.yml
+similarity index 100%
+rename from core/profiles/standard/config/install/field.field.node.article.comment.yml
+rename to core/profiles/standard/config/optional/field.field.node.article.comment.yml
+diff --git a/core/profiles/standard/config/install/field.field.node.article.field_image.yml b/core/profiles/standard/config/optional/field.field.node.article.field_image.yml
+similarity index 100%
+rename from core/profiles/standard/config/install/field.field.node.article.field_image.yml
+rename to core/profiles/standard/config/optional/field.field.node.article.field_image.yml
+diff --git a/core/profiles/standard/config/install/field.field.node.article.field_tags.yml b/core/profiles/standard/config/optional/field.field.node.article.field_tags.yml
+similarity index 100%
+rename from core/profiles/standard/config/install/field.field.node.article.field_tags.yml
+rename to core/profiles/standard/config/optional/field.field.node.article.field_tags.yml
+diff --git a/core/profiles/standard/config/install/field.storage.node.comment.yml b/core/profiles/standard/config/optional/field.storage.node.comment.yml
+similarity index 100%
+rename from core/profiles/standard/config/install/field.storage.node.comment.yml
+rename to core/profiles/standard/config/optional/field.storage.node.comment.yml
+diff --git a/core/profiles/standard/config/install/rdf.mapping.comment.comment.yml b/core/profiles/standard/config/optional/rdf.mapping.comment.comment.yml
+similarity index 100%
+rename from core/profiles/standard/config/install/rdf.mapping.comment.comment.yml
+rename to core/profiles/standard/config/optional/rdf.mapping.comment.comment.yml
