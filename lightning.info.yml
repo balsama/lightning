@@ -35,5 +35,4 @@ base profile:
     - automated_cron
     - tour
     - search
-    - comment
     - color
