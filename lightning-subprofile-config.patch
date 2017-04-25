@@ -14,6 +14,10 @@ diff --git a/core/profiles/standard/config/install/core.base_field_override.node
 similarity index 100%
 rename from core/profiles/standard/config/install/core.base_field_override.node.page.promote.yml
 rename to core/profiles/standard/config/optional/core.base_field_override.node.page.promote.yml
+diff --git a/core/profiles/standard/config/install/core.entity_form_display.block_content.basic.default.yml b/core/profiles/standard/config/optional/core.entity_form_display.block_content.basic.default.yml
+similarity index 100%
+rename from core/profiles/standard/config/install/core.entity_form_display.block_content.basic.default.yml
+rename to core/profiles/standard/config/optional/core.entity_form_display.block_content.basic.default.yml
 diff --git a/core/profiles/standard/config/install/core.entity_form_display.comment.comment.default.yml b/core/profiles/standard/config/optional/core.entity_form_display.comment.comment.default.yml
 similarity index 100%
 rename from core/profiles/standard/config/install/core.entity_form_display.comment.comment.default.yml
@@ -26,6 +30,10 @@ diff --git a/core/profiles/standard/config/install/core.entity_form_display.node
 similarity index 100%
 rename from core/profiles/standard/config/install/core.entity_form_display.node.page.default.yml
 rename to core/profiles/standard/config/optional/core.entity_form_display.node.page.default.yml
+diff --git a/core/profiles/standard/config/install/core.entity_view_display.block_content.basic.default.yml b/core/profiles/standard/config/optional/core.entity_view_display.block_content.basic.default.yml
+similarity index 100%
+rename from core/profiles/standard/config/install/core.entity_view_display.block_content.basic.default.yml
+rename to core/profiles/standard/config/optional/core.entity_view_display.block_content.basic.default.yml
 diff --git a/core/profiles/standard/config/install/core.entity_view_display.comment.comment.default.yml b/core/profiles/standard/config/optional/core.entity_view_display.comment.comment.default.yml
 similarity index 100%
 rename from core/profiles/standard/config/install/core.entity_view_display.comment.comment.default.yml
@@ -50,6 +58,10 @@ diff --git a/core/profiles/standard/config/install/core.entity_view_display.node
 similarity index 100%
 rename from core/profiles/standard/config/install/core.entity_view_display.node.page.teaser.yml
 rename to core/profiles/standard/config/optional/core.entity_view_display.node.page.teaser.yml
+diff --git a/core/profiles/standard/config/install/field.field.block_content.basic.body.yml b/core/profiles/standard/config/optional/field.field.block_content.basic.body.yml
+similarity index 100%
+rename from core/profiles/standard/config/install/field.field.block_content.basic.body.yml
+rename to core/profiles/standard/config/optional/field.field.block_content.basic.body.yml
 diff --git a/core/profiles/standard/config/install/field.field.comment.comment.comment_body.yml b/core/profiles/standard/config/optional/field.field.comment.comment.comment_body.yml
 similarity index 100%
 rename from core/profiles/standard/config/install/field.field.comment.comment.comment_body.yml
