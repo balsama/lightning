@@ -206,6 +206,10 @@ class PanelsSubContext extends DrupalSubContextBase {
       // The first cell is the one with the label; find() will return the first
       // matched element, which should be the first cell.
       $row_label = $row->find('css', 'td')->getText();
+
+      // $row_label can contain a non-breaking space with some bizarre encoding.
+      // So let's get a clean string before we trim.
+      $row_label = str_replace('&nbsp;', NULL, htmlentities($row_label));
       if (trim($row_label) == $block_label) {
         return $row;
       }

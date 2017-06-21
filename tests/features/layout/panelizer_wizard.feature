@@ -56,6 +56,7 @@ Feature: Panelizer Wizard
     And I click "Edit draft"
     And I select "Two Column" from "Full content"
     And press "Save"
+    And I wait 5 seconds
     Then I should see "Authored by"
     And I click "Edit draft"
     And I select "Single Column" from "Full content"
