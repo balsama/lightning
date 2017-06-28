@@ -11,22 +11,6 @@ use Drupal\DrupalExtension\Context\MinkContext;
 class DropzoneContext extends DrupalSubContextBase {
 
   /**
-   * The Mink context.
-   *
-   * @var MinkContext
-   */
-  protected $minkContext;
-
-  /**
-   * Gathers required contexts.
-   *
-   * @BeforeScenario
-   */
-  public function gatherContexts() {
-    $this->minkContext = $this->getContext(MinkContext::class);
-  }
-
-  /**
    * Attaches a file to a dropzone.
    *
    * @param string $file
@@ -38,7 +22,7 @@ class DropzoneContext extends DrupalSubContextBase {
     $this->getSession()
       ->executeScript('Dropzone.instances[0].hiddenFileInput.name = "file"');
 
-    $this->minkContext->attachFileToField('file', $file);
+    $this->getContext(MinkContext::class)->attachFileToField('file', $file);
 
     // TODO: React when the upload actually completes.
     sleep(3);

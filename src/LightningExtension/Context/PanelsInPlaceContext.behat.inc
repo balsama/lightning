@@ -12,22 +12,6 @@ use Drupal\DrupalExtension\Context\MinkContext;
 class PanelsInPlaceContext extends DrupalSubContextBase {
 
   /**
-   * The Mink context.
-   *
-   * @var MinkContext
-   */
-  protected $minkContext;
-
-  /**
-   * Gathers required contexts.
-   *
-   * @BeforeScenario
-   */
-  public function gatherContexts() {
-    $this->minkContext = $this->getContext(MinkContext::class);
-  }
-
-  /**
    * Returns the active Panels IPE tab's contents.
    *
    * @return \Behat\Mink\Element\NodeElement
@@ -74,7 +58,7 @@ class PanelsInPlaceContext extends DrupalSubContextBase {
     // ...but only open it if not already active.
     if ($link->getParent()->hasClass('active') == FALSE) {
       $link->click();
-      $this->minkContext->iWaitForAjaxToFinish();
+      $this->getContext(MinkContext::class)->iWaitForAjaxToFinish();
     }
 
     return $this->getActiveTab();
@@ -104,7 +88,7 @@ class PanelsInPlaceContext extends DrupalSubContextBase {
     // ...but only open it if not already active.
     if ($link->hasClass('active') == FALSE) {
       $link->click();
-      $this->minkContext->iWaitForAjaxToFinish();
+      $this->getContext(MinkContext::class)->iWaitForAjaxToFinish();
     }
 
     return $tab;
@@ -171,7 +155,7 @@ class PanelsInPlaceContext extends DrupalSubContextBase {
     $this->assertBlockPluginExists($plugin_id, $category)
       ->click();
 
-    $this->minkContext->iWaitForAjaxToFinish();
+    $this->getContext(MinkContext::class)->iWaitForAjaxToFinish();
 
     return $this->assertSession()
       ->elementExists('css', '.panels-ipe-block-plugin-form', $this->getActiveTab());
@@ -191,7 +175,7 @@ class PanelsInPlaceContext extends DrupalSubContextBase {
       )
       ->click();
 
-    $this->minkContext->iWaitForAjaxToFinish();
+    $this->getContext(MinkContext::class)->iWaitForAjaxToFinish();
   }
 
   /**
@@ -209,7 +193,7 @@ class PanelsInPlaceContext extends DrupalSubContextBase {
     $this->instantiateBlock($plugin_id, $category)
       ->pressButton('Add');
 
-    $this->minkContext->iWaitForAjaxToFinish();
+    $this->getContext(MinkContext::class)->iWaitForAjaxToFinish();
   }
 
   /**
@@ -224,7 +208,7 @@ class PanelsInPlaceContext extends DrupalSubContextBase {
 
     /** @var \Acquia\LightningExtension\Context\UtilityContext $utility */
     $utility = $this->getContext(UtilityContext::class);
-    $utility->acceptAlerts([$this->minkContext, 'iWaitForAjaxToFinish']);
+    $utility->acceptAlerts([$this->getContext(MinkContext::class), 'iWaitForAjaxToFinish']);
   }
 
 }
