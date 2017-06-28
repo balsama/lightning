@@ -8,6 +8,7 @@
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Exception\ExpectationException;
 use Drupal\DrupalExtension\Context\DrupalSubContextBase;
+use Drupal\DrupalExtension\Context\MinkContext;
 
 /**
  * Contains step definitions for working with Panels and panelized pages.
@@ -15,27 +16,21 @@ use Drupal\DrupalExtension\Context\DrupalSubContextBase;
 class PanelsSubContext extends DrupalSubContextBase {
 
   /**
-   * The Mink context.
+   * Gets the Mink context.
    *
-   * @var \Drupal\DrupalExtension\Context\MinkContext
+   * @return \Drupal\DrupalExtension\Context\MinkContext
    */
-  protected $minkContext;
+  protected function getMinkContext() {
+    return $this->getContext(MinkContext::class);
+  }
 
   /**
-   * The Lightning subcontext.
+   * Gets the Lightning context.
    *
-   * @var \LightningSubContext
+   * @return \LightningSubContext
    */
-  protected $lightning;
-
-  /**
-   * Pre-scenario hook.
-   *
-   * @BeforeScenario
-   */
-  public function gatherContexts() {
-    $this->minkContext = $this->getContext('\Drupal\DrupalExtension\Context\MinkContext');
-    $this->lightning = $this->getContext('LightningSubContext');
+  protected function getLightningContext() {
+    return $this->getContext(LightningSubContext::class);
   }
 
   /**
@@ -51,10 +46,11 @@ class PanelsSubContext extends DrupalSubContextBase {
    * @When I panelize the :bundle node type
    */
   public function panelize($bundle) {
-    $this->minkContext->assertAtPath("admin/structure/types/manage/$bundle/display");
-    $this->minkContext->checkOption('panelizer[enable]');
-    $this->minkContext->checkOption('panelizer[custom]');
-    $this->minkContext->pressButton('Save');
+    $minkContext = $this->getMinkContext();
+    $minkContext->assertAtPath("admin/structure/types/manage/$bundle/display");
+    $minkContext->checkOption('panelizer[enable]');
+    $minkContext->checkOption('panelizer[custom]');
+    $minkContext->pressButton('Save');
   }
 
   /**
@@ -70,10 +66,11 @@ class PanelsSubContext extends DrupalSubContextBase {
    * @When I unpanelize the :bundle node type
    */
   public function unpanelize($bundle) {
-    $this->minkContext->assertAtPath("admin/structure/types/manage/$bundle/display");
-    $this->minkContext->uncheckOption('panelizer[enable]');
-    $this->minkContext->uncheckOption('panelizer[custom]');
-    $this->minkContext->pressButton('Save');
+    $minkContext = $this->getMinkContext();
+    $minkContext->assertAtPath("admin/structure/types/manage/$bundle/display");
+    $minkContext->uncheckOption('panelizer[enable]');
+    $minkContext->uncheckOption('panelizer[custom]');
+    $minkContext->pressButton('Save');
   }
 
   /**
@@ -87,14 +84,17 @@ class PanelsSubContext extends DrupalSubContextBase {
    * @When I change the layout to :layout_id from the :category category
    */
   public function changeLayout($category, $layout_id) {
-    $this->lightning->clickElementBySelector('a[title = "Change Layout"]');
-    $this->minkContext->iWaitForAjaxToFinish();
+    $lightningContext = $this->getLightningContext();
+    $minkContext = $this->getMinkContext();
 
-    $this->lightning->clickElementBySelector('a[data-category = "' . $category . '"]');
-    $this->minkContext->iWaitForAjaxToFinish();
+    $lightningContext->clickElementBySelector('a[title = "Change Layout"]');
+    $minkContext->iWaitForAjaxToFinish();
 
-    $this->lightning->clickElementBySelector('a[data-layout-id = "' . $layout_id . '"]');
-    $this->minkContext->iWaitForAjaxToFinish();
+    $lightningContext->clickElementBySelector('a[data-category = "' . $category . '"]');
+    $minkContext->iWaitForAjaxToFinish();
+
+    $lightningContext->clickElementBySelector('a[data-layout-id = "' . $layout_id . '"]');
+    $minkContext->iWaitForAjaxToFinish();
   }
 
   /**
@@ -108,17 +108,19 @@ class PanelsSubContext extends DrupalSubContextBase {
    * @When I place the :label block into the :region panelizer region
    */
   public function placePanelizerBlock($label, $region) {
-    $this->minkContext->clickLink('Add new block');
-    $this->minkContext->iWaitForAjaxToFinish();
+    $minkContext = $this->getMinkContext();
 
-    $this->minkContext->clickLink($label);
-    $this->minkContext->iWaitForAjaxToFinish();
+    $minkContext->clickLink('Add new block');
+    $minkContext->iWaitForAjaxToFinish();
 
-    $this->minkContext->selectOption('region', $region);
-    $this->minkContext->iWaitForAjaxToFinish();
+    $minkContext->clickLink($label);
+    $minkContext->iWaitForAjaxToFinish();
 
-    $this->minkContext->pressButton('Add block');
-    $this->minkContext->iWaitForAjaxToFinish();
+    $minkContext->selectOption('region', $region);
+    $minkContext->iWaitForAjaxToFinish();
+
+    $minkContext->pressButton('Add block');
+    $minkContext->iWaitForAjaxToFinish();
 
     $this->assertPanelizerBlock($label, $region);
   }
@@ -270,9 +272,10 @@ class PanelsSubContext extends DrupalSubContextBase {
    * @Given I have customized the :view_mode view mode of the :node_type content type
    */
   public function customizeViewMode($view_mode, $node_type) {
-    $this->minkContext->visit('/admin/structure/types/manage/' . $node_type . '/display');
-    $this->minkContext->assertCheckBox('display_modes_custom[' . $view_mode . ']');
-    $this->minkContext->pressButton('Save');
+    $minkContext = $this->getMinkContext();
+    $minkContext->visit('/admin/structure/types/manage/' . $node_type . '/display');
+    $minkContext->assertCheckBox('display_modes_custom[' . $view_mode . ']');
+    $minkContext->pressButton('Save');
   }
 
   /**
@@ -288,9 +291,10 @@ class PanelsSubContext extends DrupalSubContextBase {
    * @Given I have uncustomized the :view_mode view mode of the :node_type content type
    */
   public function uncustomizeViewMode($view_mode, $node_type) {
-    $this->minkContext->visit('/admin/structure/types/manage/' . $node_type . '/display');
-    $this->minkContext->assertUncheckBox('display_modes_custom[' . $view_mode . ']');
-    $this->minkContext->pressButton('Save');
+    $minkContext = $this->getMinkContext();
+    $minkContext->visit('/admin/structure/types/manage/' . $node_type . '/display');
+    $minkContext->assertUncheckBox('display_modes_custom[' . $view_mode . ']');
+    $minkContext->pressButton('Save');
   }
 
 }

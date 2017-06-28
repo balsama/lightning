@@ -8,6 +8,7 @@
 use Acquia\LightningExtension\Context\CkEditorContext;
 use Acquia\LightningExtension\Context\EntityBrowserContext;
 use Drupal\DrupalExtension\Context\DrupalSubContextBase;
+use Drupal\DrupalExtension\Context\MinkContext;
 
 /**
  * Contains step definitions for testing the CKEditor media widget.
@@ -21,7 +22,7 @@ class MediaLibrarySubContext extends DrupalSubContextBase {
    *
    */
   protected function getMinkContext() {
-    return $this->getContext('\Drupal\DrupalExtension\Context\MinkContext');
+    return $this->getContext(MinkContext::class);
   }
 
   /**

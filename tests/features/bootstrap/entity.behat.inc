@@ -10,6 +10,7 @@ use Behat\Mink\Exception\ExpectationException;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\DrupalExtension\Context\DrupalContext;
 use Drupal\DrupalExtension\Context\DrupalSubContextBase;
+use Drupal\DrupalExtension\Context\MinkContext;
 use Drupal\DrupalExtension\Hook\Scope\EntityScope;
 use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
@@ -28,27 +29,21 @@ class EntitySubContext extends DrupalSubContextBase {
   protected $entities = [];
 
   /**
-   * The Lightning subcontext.
+   * Gets the Mink context.
    *
-   * @var \LightningSubContext
+   * @return \Drupal\DrupalExtension\Context\MinkContext
    */
-  protected $lightning;
+  protected function getMinkContext() {
+    return $this->getContext(MinkContext::class);
+  }
 
   /**
-   * The Mink context.
+   * Gets the Lightning context.
    *
-   * @var \Drupal\DrupalExtension\Context\MinkContext
+   * @return \LightningSubContext
    */
-  protected $minkContext;
-
-  /**
-   * Pre-scenario hook.
-   *
-   * @BeforeScenario
-   */
-  public function gatherContexts() {
-    $this->lightning = $this->getContext('LightningSubContext');
-    $this->minkContext = $this->getContext('\Drupal\DrupalExtension\Context\MinkContext');
+  protected function getLightningContext() {
+    return $this->getContext(LightningSubContext::class);
   }
 
   /**
@@ -237,7 +232,7 @@ class EntitySubContext extends DrupalSubContextBase {
    * @When I visit the current revision
    */
   public function visitCurrentNodeRevision() {
-    $this->minkContext->clickLink('Revisions');
+    $this->getMinkContext()->clickLink('Revisions');
 
     $session = $this->getSession();
 
@@ -275,7 +270,8 @@ class EntitySubContext extends DrupalSubContextBase {
     $a = ((int) $a) - 1;
     $b = ((int) $b) - 1;
 
-    $this->minkContext->clickLink('Revisions');
+    $minkContext = $this->getMinkContext();
+    $minkContext->clickLink('Revisions');
 
     /** @var \Behat\Mink\Element\NodeElement[] $rows */
     $rows = $this->getSession()
@@ -286,9 +282,9 @@ class EntitySubContext extends DrupalSubContextBase {
     $a = $rows[$a]->findField('radios_left')->getValue();
     $b = $rows[$b]->findField('radios_right')->getValue();
 
-    $this->minkContext->selectOption('radios_left', $a);
-    $this->minkContext->selectOption('radios_right', $b);
-    $this->minkContext->pressButton('Compare');
+    $minkContext->selectOption('radios_left', $a);
+    $minkContext->selectOption('radios_right', $b);
+    $minkContext->pressButton('Compare');
   }
 
   /**
@@ -300,8 +296,8 @@ class EntitySubContext extends DrupalSubContextBase {
    * @When /^I visit the (\d+)(?:st|nd|rd|th) revision$/
    */
   public function visitNthRevision($n) {
-    $this->minkContext->clickLink('Revisions');
-    $this->lightning->clickElementBySelector('main table tr:nth-child(' . $n . ') td:first-child a');
+    $this->getMinkContext()->clickLink('Revisions');
+    $this->getLightningContext()->clickElementBySelector('main table tr:nth-child(' . $n . ') td:first-child a');
   }
 
   /**
