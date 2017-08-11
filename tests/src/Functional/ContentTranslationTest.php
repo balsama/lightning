@@ -12,7 +12,7 @@ use Drupal\user\Entity\Role;
  * @group lightning
  * @group translation
  */
-class ContentTransaltionTest extends BrowserTestBase {
+class ContentTranslationTest extends BrowserTestBase {
 
   /**
    * {@inheritdoc}
