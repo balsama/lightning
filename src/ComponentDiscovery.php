@@ -80,10 +80,10 @@ class ComponentDiscovery {
    */
   public function getAll() {
     if (is_null($this->components)) {
-      $base_path = $this->getBaseComponentPath();
+      $identifier = 'lightning_';
 
-      $filter = function (Extension $module) use ($base_path) {
-        return strpos($module->getPath(), $base_path) === 0;
+      $filter = function (Extension $module) use ($identifier) {
+        return strpos($module->getName(), $identifier) === 0;
       };
 
       $this->components = array_filter($this->discovery->scan('module'), $filter);
@@ -98,10 +98,12 @@ class ComponentDiscovery {
    *   Array of extension objects for top-level Lightning components.
    */
   public function getMainComponents() {
-    $base_path = $this->getBaseComponentPath();
+    $identifier = 'lightning_';
 
-    $filter = function (Extension $module) use ($base_path) {
-      return dirname($module->getPath()) == $base_path;
+    $filter = function (Extension $module) use ($identifier) {
+      $path = explode('/', $module->getPath());
+      $parent = $path[count($path)-3];
+      return strpos($parent, $identifier) !== 0;
     };
 
     return array_filter($this->getAll(), $filter);
