@@ -34,16 +34,16 @@
     "config": {
         "bin-dir": "bin/"
     },
-    "repositories": [
-        {
+    "repositories": {
+        "Drupal.Org": {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         },
-        {
+        "Asset Packagist": {
             "type": "composer",
             "url": "https://asset-packagist.org"
         }
-    ],
+    },
     "scripts": {
         "post-install-cmd": [
             "PhantomInstaller\\Installer::installPhantomJS",
@@ -163,6 +163,7 @@
         }
     },
     "require": {
+        "drupal/lightning_core": "1.x-dev",
         "cweagans/composer-patches": "^1.5.0",
         "drupal/core": "~8.4.1",
         "drupal/embed": "^1.0",
