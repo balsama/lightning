@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "427ed178cbac71f6900a46910089d491",
+    "content-hash": "0a29157723c0c771c86c5831a4c62ee9",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2344,12 +2344,57 @@
             }
         },
         {
+            "name": "drupal/lightning_api",
+            "version": "dev-1.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/lightning_api",
+                "reference": "e3f0168caa773ecf29fd2800ad635081e66815f1"
+            },
+            "require": {
+                "drupal/core": "~8.0",
+                "drupal/jsonapi": "*",
+                "drupal/openapi_redoc": "*",
+                "drupal/simple_oauth_extras": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.x-dev",
+                    "datestamp": "1511800985",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "balsama",
+                    "homepage": "https://www.drupal.org/user/223087"
+                }
+            ],
+            "description": "Progressive decoupling? No problem.",
+            "homepage": "https://www.drupal.org/project/lightning_api",
+            "support": {
+                "source": "http://cgit.drupalcode.org/lightning_api"
+            },
+            "time": "2017-11-27T16:59:02+00:00"
+        },
+        {
             "name": "drupal/lightning_core",
             "version": "dev-1.x",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/lightning_core",
-                "reference": "73031fa11808269d379e8b2c8e18aeceff3af99b"
+                "reference": "22ef41cd28981713a83d125e413a2e706d7bbf0b"
             },
             "require": {
                 "drupal/core": "*"
@@ -2388,7 +2433,155 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/lightning_core"
             },
-            "time": "2017-11-14T16:44:58+00:00"
+            "time": "2017-11-27T17:00:01+00:00"
+        },
+        {
+            "name": "drupal/lightning_layout",
+            "version": "dev-1.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/lightning_layout",
+                "reference": "f617be121875870c71ab4599d5a74fc742fe3921"
+            },
+            "require": {
+                "drupal/core": "~8.0",
+                "drupal/lightning_core": "*",
+                "drupal/panelizer": "*",
+                "drupal/panelizer_quickedit": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.x-dev",
+                    "datestamp": "1511803384",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "balsama",
+                    "homepage": "https://www.drupal.org/user/223087"
+                }
+            ],
+            "description": "Provides the tools to take control of your layout.",
+            "homepage": "https://www.drupal.org/project/lightning_layout",
+            "support": {
+                "source": "http://cgit.drupalcode.org/lightning_layout"
+            },
+            "time": "2017-11-27T17:11:02+00:00"
+        },
+        {
+            "name": "drupal/lightning_media",
+            "version": "dev-1.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/lightning_media",
+                "reference": "eae3cd4611ee2d32be1ffd84a20af8a91f024466"
+            },
+            "require": {
+                "drupal/core": "*",
+                "drupal/entity_browser": "*",
+                "drupal/entity_embed": "*",
+                "drupal/inline_entity_form": "*",
+                "drupal/lightning_core": "*",
+                "drupal/media": "*",
+                "drupal/views_infinite_scroll": "*"
+            },
+            "require-dev": {
+                "drupal/dropzonejs": "*",
+                "drupal/media_entity_instagram": "*",
+                "drupal/media_entity_twitter": "*",
+                "drupal/video_embed_media": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.x-dev",
+                    "datestamp": "1511803384",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "balsama",
+                    "homepage": "https://www.drupal.org/user/223087"
+                }
+            ],
+            "description": "Slick media handling for Lightning. So cool you''ll make the A/C jealous.",
+            "homepage": "https://www.drupal.org/project/lightning_media",
+            "support": {
+                "source": "http://cgit.drupalcode.org/lightning_media"
+            },
+            "time": "2017-11-27T17:14:34+00:00"
+        },
+        {
+            "name": "drupal/lightning_workflow",
+            "version": "dev-1.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/lightning_workflow",
+                "reference": "ecaf0fe7c7f4f481db59bf8adef2f804b99443b8"
+            },
+            "require": {
+                "drupal/core": "~8.0",
+                "drupal/lightning_core": "*",
+                "drupal/workbench_moderation": "*"
+            },
+            "require-dev": {
+                "drupal/inline_entity_form": "*",
+                "drupal/scheduled_updates": "*",
+                "drupal/workbench_moderation": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.x-dev",
+                    "datestamp": "1511803384",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "balsama",
+                    "homepage": "https://www.drupal.org/user/223087"
+                }
+            ],
+            "description": "Tools to improve your content workflow.",
+            "homepage": "https://www.drupal.org/project/lightning_workflow",
+            "support": {
+                "source": "http://cgit.drupalcode.org/lightning_workflow"
+            },
+            "time": "2017-11-27T17:17:22+00:00"
         },
         {
             "name": "drupal/media_entity",
@@ -2877,6 +3070,52 @@
             }
         },
         {
+            "name": "drupal/openapi_redoc",
+            "version": "1.0.0-alpha1",
+            "require": {
+                "drupal/core": "~8.0",
+                "drupal/jsonapi": "*",
+                "drupal/openapi": "self.version"
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-alpha1",
+                    "datestamp": "1498657743",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "mrjmd",
+                    "homepage": "https://www.drupal.org/user/1800446"
+                },
+                {
+                    "name": "rogierbom",
+                    "homepage": "https://www.drupal.org/user/1352176"
+                },
+                {
+                    "name": "tedbow",
+                    "homepage": "https://www.drupal.org/user/240860"
+                }
+            ],
+            "description": "Documentation using the ReDoc",
+            "homepage": "https://www.drupal.org/project/openapi",
+            "support": {
+                "source": "http://cgit.drupalcode.org/openapi"
+            }
+        },
+        {
             "name": "drupal/panelizer",
             "version": "4.0.0",
             "source": {
@@ -2954,6 +3193,67 @@
                 "source": "http://git.drupal.org/project/panelizer.git",
                 "issues": "https://www.drupal.org/project/issues/panelizer",
                 "irc": "irc://irc.freenode.org/drupal-scotch"
+            }
+        },
+        {
+            "name": "drupal/panelizer_quickedit",
+            "version": "4.0.0",
+            "require": {
+                "drupal/core": "*",
+                "drupal/panelizer": "self.version"
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-4.x": "4.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-4.0",
+                    "datestamp": "1493427125",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "DamienMcKenna",
+                    "homepage": "https://www.drupal.org/user/108450"
+                },
+                {
+                    "name": "EclipseGc",
+                    "homepage": "https://www.drupal.org/user/61203"
+                },
+                {
+                    "name": "dsnopek",
+                    "homepage": "https://www.drupal.org/user/266527"
+                },
+                {
+                    "name": "japerry",
+                    "homepage": "https://www.drupal.org/user/45640"
+                },
+                {
+                    "name": "merlinofchaos",
+                    "homepage": "https://www.drupal.org/user/26979"
+                },
+                {
+                    "name": "neclimdul",
+                    "homepage": "https://www.drupal.org/user/48673"
+                },
+                {
+                    "name": "tim.plunkett",
+                    "homepage": "https://www.drupal.org/user/241634"
+                }
+            ],
+            "description": "Enables Quick Edit to function normally when using Panelizer.",
+            "homepage": "https://www.drupal.org/project/panelizer",
+            "support": {
+                "source": "http://cgit.drupalcode.org/panelizer"
             }
         },
         {
@@ -3467,6 +3767,47 @@
                 }
             ],
             "description": "The Simple OAuth module for Drupal",
+            "homepage": "https://www.drupal.org/project/simple_oauth",
+            "support": {
+                "source": "http://cgit.drupalcode.org/simple_oauth"
+            }
+        },
+        {
+            "name": "drupal/simple_oauth_extras",
+            "version": "3.3.0",
+            "require": {
+                "drupal/core": "~8.0",
+                "drupal/simple_oauth": "self.version"
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-3.x": "3.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-3.3",
+                    "datestamp": "1511538185",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "e0ipso",
+                    "homepage": "https://www.drupal.org/user/550110"
+                },
+                {
+                    "name": "pcambra",
+                    "homepage": "https://www.drupal.org/user/122101"
+                }
+            ],
+            "description": "OAuth2 extra access grants.",
             "homepage": "https://www.drupal.org/project/simple_oauth",
             "support": {
                 "source": "http://cgit.drupalcode.org/simple_oauth"
@@ -7967,8 +8308,7 @@
             "homepage": "https://www.drupal.org/project/media_entity_generic",
             "support": {
                 "source": "http://cgit.drupalcode.org/media_entity_generic"
-            },
-            "time": "2017-10-18T07:13:43+00:00"
+            }
         },
         {
             "name": "drush/drush",
@@ -11070,6 +11410,10 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "drupal/lightning_core": 20,
+        "drupal/lightning_api": 20,
+        "drupal/lightning_layout": 20,
+        "drupal/lightning_media": 20,
+        "drupal/lightning_workflow": 20,
         "drupal/media_entity_generic": 20
     },
     "prefer-stable": true,

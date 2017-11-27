@@ -164,6 +164,10 @@
     },
     "require": {
         "drupal/lightning_core": "1.x-dev",
+        "drupal/lightning_api": "1.x-dev",
+        "drupal/lightning_layout": "1.x-dev",
+        "drupal/lightning_media": "1.x-dev",
+        "drupal/lightning_workflow": "1.x-dev",
         "cweagans/composer-patches": "^1.5.0",
         "drupal/core": "~8.4.1",
         "drupal/embed": "^1.0",
