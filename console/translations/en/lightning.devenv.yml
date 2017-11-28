@@ -1,14 +1,27 @@
 description: 'Creates an environment suitable for Lightning development.'
+success: 'Successfully symlinked %d of %d Lightning components: %s.'
 questions:
-  confirm: 'This command will remove the Lightning Components from your module
-            directory and symlink them to existing repos outside of Lightning
-            VCS root. You should ensure that you have all of Lightning''s
-            top-level components checked out in directories next to the main
-            Lightning repo. Are you sure you want to continue?'
-  levels_up: 'How many levels up from docroot are your external dependencies? In
-              a normal install it is 2.'
-  branch_name: 'What branch should the external components have checked out?'
-  prefix: 'The prefix to append to exterbnal component directory names when
-           searching for them. This is useful, for example, when you want to use
-           a fork of the main components for testing. E.g.:
-           MYNAME_lightning_api.'
+  confirm: >
+    This command will remove the Lightning Components from your module
+    directory and symlink them to existing repos outside of Lightning VCS root.
+    You should ensure that you have all of Lightning's top-level components
+    checked out in directories next to the main Lightning repo. Are you sure you
+    want to continue?
+  levels_up: >
+    How many levels up from docroot are your external dependencies? In a normal
+    setup where the external dependencies are siblings to the Lightning repo, it
+    is 2.
+  branch: 'What branch should the external components have checked out?'
+  prefix: >
+    The prefix to append to external component directory names when
+    searching for them. This is useful, for example, when you want to use a fork
+    of the main components for testing. E.g.: MYNAME_lightning_api.
+caution:
+  dirty-branch: >
+    The following components have uncommitted changes: %s. You should commit or
+    stash the changes before continuing.
+  wrong-branch: 'The following components are not on the expected branch %s. %s'
+exception:
+  extension-not-found: ' %s not found. Expected to find it at %s'
+  levels-up: '"Levels up" must be an integer greater than or equal to 2.'
+

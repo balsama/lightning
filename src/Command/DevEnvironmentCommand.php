@@ -12,6 +12,7 @@ use Drupal\Core\Extension\Extension;
 use Drupal\lightning\ComponentDiscovery;
 use Drupal\lightning_core\Element;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\InvalidOptionException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
@@ -23,8 +24,8 @@ use Symfony\Component\Process\Process;
 /**
  * Creates an environment suitable for development by symlink-ing Lightning
  * components to existing local copies of their respective repos. This script
- * requires that you have set up each of Lightning's components in sibling
- * directories.
+ * requires that you have set up each of Lightning's components in some parent
+ * directory of this repo.
  *
  * @DrupalCommand
  */
@@ -138,7 +139,7 @@ class DevEnvironmentCommand extends Command {
     $options = $input->getOptions();
 
     if ($options['levels_up']) {
-      $this->isNumeric($options['levels_up']);
+      $this->validateLevelsUp($options['levels_up']);
     }
   }
 
@@ -154,7 +155,7 @@ class DevEnvironmentCommand extends Command {
         InputOption::VALUE_REQUIRED
       )
       ->addOption(
-        'branch_name',
+        'branch',
         NULL,
         InputOption::VALUE_REQUIRED
       );
@@ -173,23 +174,25 @@ class DevEnvironmentCommand extends Command {
     $io = new DrupalStyle($input, $output);
     $options = $input->getOptions();
 
-    // Get the number of levels up the external components are from docroot.
+    // Get the number of levels up the external components are from docroot from
+    // the --levels_up option, or ask if none was specified.
     $env = $options['levels_up'] ?: $io->ask(
         $this->trans('commands.lightning.devenv.questions.levels_up'),
         2,
-        [$this, 'isNumeric']
+        [$this, 'validateLevelsUp']
     );
     $input->setOption('levels_up', $env);
 
-    // Get the expected branch name for the external components.
-    $env = $options['branch_name'] ?: $io->ask(
-      $this->trans('commands.lightning.devenv.questions.branch_name'),
+    // Get the expected branch name for the external components from the
+    // --branch option or ask if none was specified.
+    $env = $options['branch'] ?: $io->ask(
+      $this->trans('commands.lightning.devenv.questions.branch'),
       '8.x-1.x'
     );
-    $input->setOption('branch_name', $env);
+    $input->setOption('branch', $env);
 
     $this->setExternalExternsionDirectory($input->getOption('levels_up'));
-    $this->expected_branch = $input->getOption('branch_name');
+    $this->expected_branch = $input->getOption('branch');
     if ($input->hasArgument('prefix')) {
       $this->prefix = $input->getArgument('prefix');
     }
@@ -206,24 +209,33 @@ class DevEnvironmentCommand extends Command {
       $this->symlinkAllExternalComponents();
       $git_problems = $this->getComponentsGitStatus();
       if (isset($git_problems['dirty'])) {
-        $io->caution('The following components have uncommitted changes: ' .  Element::oxford($git_problems['dirty']) . ' You should commit or stash the changes before continuing.');
+        $io->caution(
+          sprintf(
+            $this->trans('commands.lightning.devenv.caution.dirty-branch'),
+            Element::oxford($git_problems['dirty'])
+          )
+        );
         // @todo Add option to reset and clean repo?
       }
       if (isset($git_problems['branch'])) {
-        $io->caution('The following components are not on the expected branch ' . $this->expected_branch . ': ' . Element::oxford($git_problems['branch']));
+        $io->caution(
+          sprintf(
+            $this->trans('commands.lightning.devenv.caution.wrong-branch'),
+            $this->expected_branch,
+            Element::oxford($git_problems['branch'])
+          )
+        );
         // @todo Add option to checkout expected branch?
       }
 
-      $io->success('Successfully symlinked ' . count($this->successfullySymlinked) . ' of ' . count($this->mainComponents) . ' Lightning components: ' . Element::oxford($this->successfullySymlinked));
-    }
-  }
-
-  /**
-   * Confirms that all external components exist in the expected place.
-   */
-  protected function confirmAllExternalComponentsExist() {
-    foreach ($this->mainComponents as $extension) {
-      $this->confirmExisting($extension);
+      $io->success(
+        sprintf(
+          $this->trans('commands.lightning.devenv.success'),
+          count($this->successfullySymlinked),
+          count($this->mainComponents),
+          Element::oxford($this->successfullySymlinked)
+        )
+      );
     }
   }
 
@@ -266,6 +278,15 @@ class DevEnvironmentCommand extends Command {
   }
 
   /**
+   * Confirms that all external components exist in the expected place.
+   */
+  protected function confirmAllExternalComponentsExist() {
+    foreach ($this->mainComponents as $extension) {
+      $this->confirmExisting($extension);
+    }
+  }
+
+  /**
    * Confirms that a given extension exists in the expected external extension
    * directory.
    *
@@ -277,7 +298,13 @@ class DevEnvironmentCommand extends Command {
    */
   protected function confirmExisting(Extension $extension) {
     if (!$this->fs->exists($this->getExternalExtensionPath($extension))) {
-      throw new IOException($extension->getName() . ' not found. Expected to find it at ' . $this->getExternalExtensionPath($extension));
+      throw new IOException(
+        sprintf(
+          $this->trans('commands.lightning.devenv.exception.extension-not-found'),
+          $extension->getName(),
+          $this->getExternalExtensionPath($extension)
+        )
+      );
     }
   }
 
@@ -347,9 +374,20 @@ class DevEnvironmentCommand extends Command {
     return $confirmation;
   }
 
-  public static function isNumeric($value) {
-    if (!is_integer($value)) {
-      throw new \RuntimeException('Levels up must be an integer.');
+  /**
+   * Levels up is used to determine which directory the external extensions
+   * should be found in. It must be an integer and greater than or equal to two.
+   *
+   * @param mixed $value
+   *
+   * @return int
+   */
+  public function validateLevelsUp($value) {
+    $value = (int)$value;
+    if ($value < 2) {
+      throw new InvalidOptionException(
+        $this->trans('commands.lightning.devenv.exception.levels-up')
+      );
     }
     return $value;
   }
