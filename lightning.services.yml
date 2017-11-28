@@ -19,7 +19,6 @@ services:
   lightning.devenvironment:
       class: '\Drupal\lightning\Command\DevEnvironmentCommand'
       arguments:
-        - '@?console.validator'
         - '@app.root'
         - '@?console.translator_manager'
       tags:

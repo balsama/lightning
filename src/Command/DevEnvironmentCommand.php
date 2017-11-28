@@ -7,7 +7,6 @@ use Drupal\Console\Command\Shared\ConfirmationTrait;
 use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Utils\TranslatorManager;
-use Drupal\Console\Utils\Validator;
 use Drupal\Core\Extension\Extension;
 use Drupal\lightning\ComponentDiscovery;
 use Drupal\lightning_core\Element;
@@ -64,13 +63,6 @@ class DevEnvironmentCommand extends Command {
   protected $levelsUp;
 
   /**
-   * The validation service.
-   *
-   * @var \Drupal\Console\Utils\Validator
-   */
-  protected $validator;
-
-  /**
    * The main, top-level components of Lightning.
    *
    * @var Extension[]
@@ -109,22 +101,18 @@ class DevEnvironmentCommand extends Command {
   /**
    * DevEnvironmantCommand constructor.
    *
-   * @param \Drupal\Console\Utils\Validator $validator
-   *   The validation service.
    * @param string $app_root
    *   The Drupal application root.
    * @param \Drupal\Console\Utils\TranslatorManager $translator
    *   (optional) The translator manager.
    */
   public function __construct(
-    Validator $validator,
     $app_root,
     TranslatorManager $translator = NULL
   ) {
     parent::__construct('lightning:devenv');
 
     $this->componentDiscovery = new ComponentDiscovery($app_root);
-    $this->validator = $validator;
     $this->appRoot = $app_root;
 
     $this->fs = new Filesystem();
