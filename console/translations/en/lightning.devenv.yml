@@ -1,0 +1,7 @@
+description: 'Creates an environment suitable for Lightning development.'
+questions:
+  confirm: 'This command will remove the Lightning Components from your module
+            directory and symlink them to existing repos outside of Lightning
+            VCS root. You should ensure that you have all of Lightning''s
+            top-level components checked out in directories next to the main
+            Lightning repo. Are you sure you want to continue?'

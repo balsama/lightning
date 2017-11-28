@@ -77,7 +77,7 @@
                 "type:bower-asset",
                 "type:npm-asset"
             ],
-            "docroot/profiles/lightning/modules/contrib/{$name}": [
+            "docroot/modules/contrib/{$name}": [
                 "type:drupal-module"
             ]
         },

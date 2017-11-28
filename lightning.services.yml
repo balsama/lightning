@@ -16,6 +16,17 @@ services:
     tags:
       - { name: drupal.command }
 
+  lightning.devenvironment:
+      class: '\Drupal\lightning\Command\DevEnvironmentCommand'
+      arguments:
+        - '@?console.string_converter'
+        - '@?console.validator'
+        - '@app.root'
+        - '@info_parser'
+        - '@?console.translator_manager'
+      tags:
+        - { name: drupal.command }
+
   lightning.behat_init:
     class: '\Drupal\lightning\Command\BehatInitCommand'
     arguments:
