@@ -2,40 +2,31 @@
 
 namespace Drupal\lightning\Command;
 
-use Composer\Util\Git;
-use Doctrine\Common\Collections\ArrayCollection;
+use Drupal\Console\Annotations\DrupalCommand;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
 use Drupal\Console\Core\Command\Shared\CommandTrait;
-use Drupal\Console\Core\Generator\Generator;
 use Drupal\Console\Core\Style\DrupalStyle;
-use Drupal\Console\Core\Utils\StringConverter;
-use Drupal\Console\Core\Utils\TwigRenderer;
 use Drupal\Console\Utils\TranslatorManager;
 use Drupal\Console\Utils\Validator;
 use Drupal\Core\Extension\Extension;
-use Drupal\Core\Extension\InfoParserInterface;
-use Drupal\Core\Utility\ProjectInfo;
-use Drupal\Driver\Exception\Exception;
 use Drupal\lightning\ComponentDiscovery;
 use Drupal\lightning_core\Element;
-use Robo\Robo;
-use Robo\Task\Vcs\GitStack;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Process\Process;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 
 /**
  * Creates an environment suitable for development by symlink-ing Lightning
  * components to existing local copies of their respective repos. This script
  * requires that you have set up each of Lightning's components in sibling
  * directories.
+ *
+ * @DrupalCommand
  */
 class DevEnvironmentCommand extends Command {
 
@@ -69,14 +60,7 @@ class DevEnvironmentCommand extends Command {
    *
    * @var int
    */
-  protected $levelsUp = 2;
-
-  /**
-   * The string converter.
-   *
-   * @var \Drupal\Console\Core\Utils\StringConverter
-   */
-  protected $stringConverter;
+  protected $levelsUp;
 
   /**
    * The validation service.
@@ -84,13 +68,6 @@ class DevEnvironmentCommand extends Command {
    * @var \Drupal\Console\Utils\Validator
    */
   protected $validator;
-
-  /**
-   * The info file parser.
-   *
-   * @var \Drupal\Core\Extension\InfoParserInterface
-   */
-  protected $infoParser;
 
   /**
    * The main, top-level components of Lightning.
@@ -111,7 +88,15 @@ class DevEnvironmentCommand extends Command {
    *
    * @var string
    */
-  protected $expected_branch = '8.x-1.x';
+  protected $expected_branch;
+
+  /**
+   * The expected prefix to append to external directory names when searching
+   * for them.
+   *
+   * @var string
+   */
+  protected $prefix = '';
 
   /**
    * Components which have been successfully symlinked.
@@ -123,57 +108,26 @@ class DevEnvironmentCommand extends Command {
   /**
    * DevEnvironmantCommand constructor.
    *
-   * @param \Drupal\Console\Core\Utils\StringConverter $string_converter
-   *   The string converter.
    * @param \Drupal\Console\Utils\Validator $validator
    *   The validation service.
    * @param string $app_root
    *   The Drupal application root.
-   * @param \Drupal\Core\Extension\InfoParserInterface $info_parser
-   *   The info file parser.
    * @param \Drupal\Console\Utils\TranslatorManager $translator
    *   (optional) The translator manager.
    */
   public function __construct(
-    StringConverter $string_converter,
     Validator $validator,
     $app_root,
-    InfoParserInterface $info_parser,
     TranslatorManager $translator = NULL
   ) {
     parent::__construct('lightning:devenv');
 
     $this->componentDiscovery = new ComponentDiscovery($app_root);
-    $this->infoParser = $info_parser;
-
-    $this->stringConverter = $string_converter;
     $this->validator = $validator;
     $this->appRoot = $app_root;
 
-    $app_root_dirs = explode('/', $app_root);
-    for ($count = 0; $count < $this->levelsUp; $count++) {
-      array_pop($app_root_dirs);
-    }
-    $this->externalComponentDir = implode('/', $app_root_dirs);
-
     $this->fs = new Filesystem();
-
-    // For reasons I can't yet figure out, adding the DrupalCommand annotation
-    // to this class, which would allow translations to be loaded automatically,
-    // causes the command to be unrecognized by Drupal Console. Which is
-    // disturbing...but we can work around it here.
-    if ($translator) {
-      $translator->addResourceTranslationsByExtension('lightning', 'module');
-    }
-
     $this->mainComponents = $this->componentDiscovery->getMainComponents();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function configure() {
-    $this->setDescription($this->trans('commands.lightning.devenv.description'));
   }
 
   /**
@@ -181,6 +135,35 @@ class DevEnvironmentCommand extends Command {
    */
   protected function initialize(InputInterface $input, OutputInterface $output) {
     parent::initialize($input, $output);
+    $options = $input->getOptions();
+
+    if ($options['levels_up']) {
+      $this->isNumeric($options['levels_up']);
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function configure() {
+    $this
+      ->setDescription($this->trans('commands.lightning.devenv.description'))
+      ->addOption(
+        'levels_up',
+        NULL,
+        InputOption::VALUE_REQUIRED
+      )
+      ->addOption(
+        'branch_name',
+        NULL,
+        InputOption::VALUE_REQUIRED
+      );
+
+    // Use argument for Prefix to make it easy to exclude.
+    $this->addArgument(
+      'prefix',
+      InputArgument::OPTIONAL
+    );
   }
 
   /**
@@ -188,7 +171,28 @@ class DevEnvironmentCommand extends Command {
    */
   protected function interact(InputInterface $input, OutputInterface $output) {
     $io = new DrupalStyle($input, $output);
+    $options = $input->getOptions();
 
+    // Get the number of levels up the external components are from docroot.
+    $env = $options['levels_up'] ?: $io->ask(
+        $this->trans('commands.lightning.devenv.questions.levels_up'),
+        2,
+        [$this, 'isNumeric']
+    );
+    $input->setOption('levels_up', $env);
+
+    // Get the expected branch name for the external components.
+    $env = $options['branch_name'] ?: $io->ask(
+      $this->trans('commands.lightning.devenv.questions.branch_name'),
+      '8.x-1.x'
+    );
+    $input->setOption('branch_name', $env);
+
+    $this->setExternalExternsionDirectory($input->getOption('levels_up'));
+    $this->expected_branch = $input->getOption('branch_name');
+    if ($input->hasArgument('prefix')) {
+      $this->prefix = $input->getArgument('prefix');
+    }
   }
 
   /**
@@ -200,14 +204,14 @@ class DevEnvironmentCommand extends Command {
     if ($this->confirmGeneration($io)) {
       $this->confirmAllExternalComponentsExist();
       $this->symlinkAllExternalComponents();
-      $problems = $this->getComponentsGitStatus();
-      if (isset($problems['dirty'])) {
-        $io->caution('The following components have uncommitted changes: ' .  Element::oxford($problems['dirty']) . ' You should commit or stash the changes before continuing.');
-        // @todo Add option to reset and clean repo.
+      $git_problems = $this->getComponentsGitStatus();
+      if (isset($git_problems['dirty'])) {
+        $io->caution('The following components have uncommitted changes: ' .  Element::oxford($git_problems['dirty']) . ' You should commit or stash the changes before continuing.');
+        // @todo Add option to reset and clean repo?
       }
-      if (isset($problems['branch'])) {
-        $io->caution('The following components are not on the expected branch ' . $this->expected_branch . ': ' . Element::oxford($problems['branch']));
-        // @todo Add option to checkout expected branch.
+      if (isset($git_problems['branch'])) {
+        $io->caution('The following components are not on the expected branch ' . $this->expected_branch . ': ' . Element::oxford($git_problems['branch']));
+        // @todo Add option to checkout expected branch?
       }
 
       $io->success('Successfully symlinked ' . count($this->successfullySymlinked) . ' of ' . count($this->mainComponents) . ' Lightning components: ' . Element::oxford($this->successfullySymlinked));
@@ -218,8 +222,8 @@ class DevEnvironmentCommand extends Command {
    * Confirms that all external components exist in the expected place.
    */
   protected function confirmAllExternalComponentsExist() {
-    foreach ($this->mainComponents as $component) {
-      $this->confirmExisting($component);
+    foreach ($this->mainComponents as $extension) {
+      $this->confirmExisting($extension);
     }
   }
 
@@ -228,10 +232,10 @@ class DevEnvironmentCommand extends Command {
    * components.
    */
   protected function symlinkAllExternalComponents() {
-    foreach ($this->mainComponents as $component) {
-      $this->fs->remove($this->appRoot . '/modules/contrib/' . $component->getName());
-      $this->fs->symlink($this->externalComponentDir . '/' . $component->getName(), $this->appRoot . '/modules/contrib/' . $component->getName());
-      $this->successfullySymlinked[] = $component->getName();
+    foreach ($this->mainComponents as $extension) {
+      $this->fs->remove($this->appRoot . '/modules/contrib/' . $extension->getName());
+      $this->fs->symlink($this->getExternalExtensionPath($extension), $this->appRoot . '/modules/contrib/' . $extension->getName());
+      $this->successfullySymlinked[] = $extension->getName();
     }
   }
 
@@ -245,16 +249,16 @@ class DevEnvironmentCommand extends Command {
    */
   protected function getComponentsGitStatus() {
     $problems = [];
-    foreach ($this->mainComponents as $component) {
-      if ($this->runCommand('git status --porcelain', $this->externalComponentDir . '/' . $component->getName())) {
-        // Add the component to the "dirty" list if git status returns anything.
-        $problems['dirty'][] = $component->getName();
+    foreach ($this->mainComponents as $extension) {
+      if ($this->runCommand('git status --porcelain', $this->getExternalExtensionPath($extension))) {
+        // Add the extension to the "dirty" list if git status returns anything.
+        $problems['dirty'][] = $extension->getName();
       }
-      $current_branch = $this->runCommand('git rev-parse --abbrev-ref HEAD', $this->externalComponentDir . '/' . $component->getName());
+      $current_branch = $this->runCommand('git rev-parse --abbrev-ref HEAD', $this->getExternalExtensionPath($extension));
       if ($current_branch != $this->expected_branch) {
-        // Add the component to "branch" list if it doesn't have the expected
+        // Add the extension to "branch" list if it doesn't have the expected
         // branch checked out.
-        $problems['branch'][] = $component->getName();
+        $problems['branch'][] = $extension->getName();
       }
     }
 
@@ -262,18 +266,18 @@ class DevEnvironmentCommand extends Command {
   }
 
   /**
-   * Confirms that a given extension exists in a sibling directory of the same
-   * name.
+   * Confirms that a given extension exists in the expected external extension
+   * directory.
    *
-   * @param Extension $component
+   * @param Extension $extension
    *   The extension to check.
    *
-   * @return boolean
-   *   False if the components doesn't exist as a sibling to this repo.
+   * @throws \IOException
+   *    If the extension is not found in the expected directory.
    */
-  protected function confirmExisting(Extension $component) {
-    if (!$this->fs->exists($this->externalComponentDir . '/' . $component->getName())) {
-      throw new IOException($component->getName() . ' not found as a sibling. Expected at ' . $this->externalComponentDir . '/' . $component->getName());
+  protected function confirmExisting(Extension $extension) {
+    if (!$this->fs->exists($this->getExternalExtensionPath($extension))) {
+      throw new IOException($extension->getName() . ' not found. Expected to find it at ' . $this->getExternalExtensionPath($extension));
     }
   }
 
@@ -297,10 +301,36 @@ class DevEnvironmentCommand extends Command {
   }
 
   /**
+   * Gets the external path of a Lightning extension.
+   *
+   * @param \Drupal\Core\Extension\Extension $extension
+   *   The extension you want the external path for.
+   *
+   * @return string
+   *   The absolute path to the external extension.
+   */
+  protected function getExternalExtensionPath(Extension $extension) {
+    return $this->externalComponentDir . '/' . $this->prefix . $extension->getName();
+  }
+
+  /**
+   * Sets the expected external components directory based on how many levels up
+   * from docroot the user said they were.
+   *
+   * @param int $levels_up
+   */
+  protected function setExternalExternsionDirectory($levels_up) {
+    $app_root_dirs = explode('/', $this->appRoot);
+    for ($count = 0; $count < $levels_up; $count++) {
+      array_pop($app_root_dirs);
+    }
+    $this->externalComponentDir = implode('/', $app_root_dirs);
+  }
+
+  /**
    * {@inheritdoc}
    */
-  public function confirmGeneration(DrupalStyle $io, $yes = false)
-  {
+  public function confirmGeneration(DrupalStyle $io, $yes = false) {
     if ($yes) {
       return $yes;
     }
@@ -315,6 +345,13 @@ class DevEnvironmentCommand extends Command {
     }
 
     return $confirmation;
+  }
+
+  public static function isNumeric($value) {
+    if (!is_integer($value)) {
+      throw new \RuntimeException('Levels up must be an integer.');
+    }
+    return $value;
   }
 
 }

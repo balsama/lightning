@@ -5,3 +5,10 @@ questions:
             VCS root. You should ensure that you have all of Lightning''s
             top-level components checked out in directories next to the main
             Lightning repo. Are you sure you want to continue?'
+  levels_up: 'How many levels up from docroot are your external dependencies? In
+              a normal install it is 2.'
+  branch_name: 'What branch should the external components have checked out?'
+  prefix: 'The prefix to append to exterbnal component directory names when
+           searching for them. This is useful, for example, when you want to use
+           a fork of the main components for testing. E.g.:
+           MYNAME_lightning_api.'
