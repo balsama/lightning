@@ -293,4 +293,26 @@ class PanelsSubContext extends DrupalSubContextBase {
     $this->minkContext->pressButton('Save');
   }
 
+  /**
+   * Asserts that IPE is enabled.
+   *
+   * @Then IPE should be enabled
+   */
+  public function assertIpeEnabled() {
+    $session = $this->getSession();
+    $session->wait('1000');
+    $this->assertSession()->elementExists('css', '#panels-ipe-tray');
+  }
+
+  /**
+   * Asserts that IPE is disabled.
+   *
+   * @Then IPE should be disabled
+   */
+  public function assertIpeDisabled() {
+    $session = $this->getSession();
+    $session->wait('1000');
+    $this->assertSession()->elementNotExists('css', '#panels-ipe-tray');
+  }
+
 }
