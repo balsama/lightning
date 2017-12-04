@@ -299,8 +299,13 @@ class PanelsSubContext extends DrupalSubContextBase {
    * @Then IPE should be enabled
    */
   public function assertIpeEnabled() {
-    $this->minkContext->iWaitForAjaxToFinish();
-    $this->assertSession()->elementExists('css', '#panels-ipe-tray');
+    $session = $this->getSession();
+
+    $victory = $session->wait(10000, 'Drupal.hasOwnProperty("panels_ipe") === true');
+
+    if (empty($victory)) {
+      throw new ExpectationException('Expected Quick Edit to be disabled, but it is not.', $session->getDriver());
+    }
   }
 
   /**
@@ -309,10 +314,13 @@ class PanelsSubContext extends DrupalSubContextBase {
    * @Then IPE should be disabled
    */
   public function assertIpeDisabled() {
-    $this->minkContext->iWaitForAjaxToFinish();
     $session = $this->getSession();
-    $session->wait(10000);
-    $this->assertSession()->elementNotExists('css', '#panels-ipe-tray');
+
+    $victory = $session->wait(10000, 'Drupal.hasOwnProperty("panels_ipe") === false');
+
+    if (empty($victory)) {
+      throw new ExpectationException('Expected Quick Edit to be disabled, but it is not.', $session->getDriver());
+    }
   }
 
 }
