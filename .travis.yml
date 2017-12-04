@@ -88,6 +88,7 @@ script:
   - composer validate composer.json --no-check-all --ansi --no-interaction
   - cd docroot
   #- phpunit --configuration ./core --group lightning
+  - sleep 5
   - cd ..
   - bin/robo test:behat -- --tags=test
 
