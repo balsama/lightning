@@ -1,4 +1,4 @@
-@lightning @api @workflow @javascript
+@lightning @api @workflow @javascript @ipe
 Feature: Integration of workflows with the In-Place Editor
 
   @ccabf7f3

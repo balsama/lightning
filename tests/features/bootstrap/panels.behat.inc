@@ -299,8 +299,7 @@ class PanelsSubContext extends DrupalSubContextBase {
    * @Then IPE should be enabled
    */
   public function assertIpeEnabled() {
-    $session = $this->getSession();
-    $session->wait('1000');
+    $this->minkContext->iWaitForAjaxToFinish();
     $this->assertSession()->elementExists('css', '#panels-ipe-tray');
   }
 
@@ -310,8 +309,7 @@ class PanelsSubContext extends DrupalSubContextBase {
    * @Then IPE should be disabled
    */
   public function assertIpeDisabled() {
-    $session = $this->getSession();
-    $session->wait('1000');
+    $this->minkContext->iWaitForAjaxToFinish();
     $this->assertSession()->elementNotExists('css', '#panels-ipe-tray');
   }
 
