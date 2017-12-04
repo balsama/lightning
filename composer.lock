@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "eeb44247e0870704aa20a61caf6d7d85",
+    "content-hash": "d44a9d673a93b3c841fcda768a5b58b7",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -902,7 +902,7 @@
                 },
                 "drupal": {
                     "version": "8.x-1.13",
-                    "datestamp": "1502799051",
+                    "datestamp": "1511982786",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -1941,7 +1941,7 @@
                 },
                 "drupal": {
                     "version": "8.x-2.0-alpha1",
-                    "datestamp": "1507712945",
+                    "datestamp": "1512118387",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Alpha releases are not covered by Drupal security advisories."
@@ -2844,7 +2844,8 @@
                     }
                 },
                 "patches_applied": {
-                    "2908917 - SaveTabView blindly assumes a Revert tab exists": "https://www.drupal.org/files/issues/2908917-2.patch"
+                    "2908917 - SaveTabView blindly assumes a Revert tab exists": "https://www.drupal.org/files/issues/2908917-2.patch",
+                    "2925942 - When used with Panelizer, Panels IPE should only work on latest revisions": "https://www.drupal.org/files/issues/panelizer-moderation-2925942-10-0.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -2927,7 +2928,8 @@
                     "2878684 - Use String.match to correlate regions when switching Layouts in Panels IPE": "https://www.drupal.org/files/issues/panels-ipe-2878684-3.patch",
                     "2825034 - Form error messages do not appear in IPE": "https://www.drupal.org/files/issues/panels-ipe-propogate-errors-2825034-5.patch",
                     "2908897 - CategoryView leaves AJAX request marked active": "https://www.drupal.org/files/issues/2908897-2.patch",
-                    "2913353 - IPE attaches behaviors a bit too quickly": "https://www.drupal.org/files/issues/2913353-2.patch"
+                    "2913353 - IPE attaches behaviors a bit too quickly": "https://www.drupal.org/files/issues/2913353-2.patch",
+                    "2919054 - 500 Error on IPE Editing / Placing": "https://www.drupal.org/files/issues/panels-ipe-moderation-2919054-18.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -3504,7 +3506,7 @@
                 },
                 "drupal": {
                     "version": "8.x-1.x",
-                    "datestamp": "1506684843",
+                    "datestamp": "1510132368",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Alpha releases are not covered by Drupal security advisories."
@@ -3616,8 +3618,8 @@
                     "dev-2.x": "2.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-2.0-alpha2+2-dev",
-                    "datestamp": "1512070985",
+                    "version": "8.x-2.0-alpha2+3-dev",
+                    "datestamp": "1512138488",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Project has not opted into security advisory coverage!"
@@ -7997,8 +7999,7 @@
             "homepage": "https://www.drupal.org/project/media_entity_generic",
             "support": {
                 "source": "http://cgit.drupalcode.org/media_entity_generic"
-            },
-            "time": "2017-10-18T07:13:43+00:00"
+            }
         },
         {
             "name": "drush/drush",

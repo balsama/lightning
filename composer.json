@@ -136,11 +136,15 @@
                 "2908897 - CategoryView leaves AJAX request marked active":
                 "https://www.drupal.org/files/issues/2908897-2.patch",
                 "2913353 - IPE attaches behaviors a bit too quickly":
-                "https://www.drupal.org/files/issues/2913353-2.patch"
+                "https://www.drupal.org/files/issues/2913353-2.patch",
+                "2919054 - 500 Error on IPE Editing / Placing":
+                "https://www.drupal.org/files/issues/panels-ipe-moderation-2919054-18.patch"
             },
             "drupal/panelizer": {
                 "2908917 - SaveTabView blindly assumes a Revert tab exists":
-                "https://www.drupal.org/files/issues/2908917-2.patch"
+                "https://www.drupal.org/files/issues/2908917-2.patch",
+                "2925942 - When used with Panelizer, Panels IPE should only work on latest revisions":
+                "https://www.drupal.org/files/issues/panelizer-moderation-2925942-10-0.patch"
             },
             "drupal/media_entity": {
                 "2918172 - Media Entity upgrade -> core fails on absent column revision_uid":
