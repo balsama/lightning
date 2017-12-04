@@ -1,4 +1,4 @@
-@lightning @core @api
+@lightning @core @api @test
 Feature: Lightning Content Types
   Makes sure that the article content type was created during installation.
 
