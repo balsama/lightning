@@ -89,7 +89,7 @@ script:
   - cd docroot
   - phpunit --configuration ./core --group lightning,profiles
   - cd ..
-  - bin/robo test:behat -- --stop-on-failure
+  - bin/robo test:behat
 
 after_failure:
   - cd docroot
