@@ -4,6 +4,7 @@ namespace Drupal\lightning;
 
 use Drupal\Core\Extension\Extension;
 use Drupal\Core\Extension\ExtensionDiscovery;
+use Drupal\field\Tests\reEnableModuleFieldTest;
 
 /**
  * Helper object to locate Lightning components and sub-components.
@@ -116,13 +117,17 @@ class ComponentDiscovery {
    *   Array of extension objects for Lightning sub-components.
    */
   public function getSubComponents() {
-    $base_path = $this->getBaseComponentPath();
-
-    $filter = function (Extension $module) use ($base_path) {
-      return strlen(dirname($module->getPath())) > strlen($base_path);
-    };
-
-    return array_filter($this->getAll(), $filter);
+    $subComponents = [];
+    foreach ($this->getAll() as $extension) {
+      if (!in_array($extension, $this->getMainComponents())) {
+        foreach ($this->getMainComponents() as $mainComponent) {
+          if (strpos($extension->getPath(), $mainComponent->getPath()) === 0) {
+            $subComponents[$extension->getName()] = $extension;
+          }
+        }
+      }
+    }
+    return $subComponents;
   }
 
 }
