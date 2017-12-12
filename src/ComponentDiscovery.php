@@ -64,16 +64,6 @@ class ComponentDiscovery {
   }
 
   /**
-   * Returns the base path for all Lightning components.
-   *
-   * @return string
-   *   The base path for all Lightning components.
-   */
-  protected function getBaseComponentPath() {
-    return $this->getProfile()->getPath() . '/modules/lightning_features';
-  }
-
-  /**
    * Returns extension objects for all Lightning components.
    *
    * @return Extension[]
@@ -102,6 +92,11 @@ class ComponentDiscovery {
     $identifier = 'lightning_';
 
     $filter = function (Extension $module) use ($identifier) {
+      // Assumes that:
+      // 1. Lightning sub-components are always in a sub-directory within the
+      //    main component.
+      // 2. The main component's directory starts with "lightning_".
+      // E.g.: "/lightning_core/modules/lightning_search".
       $path = explode('/', $module->getPath());
       $parent = $path[count($path)-3];
       return strpos($parent, $identifier) !== 0;
