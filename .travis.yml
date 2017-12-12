@@ -1,5 +1,6 @@
 sudo: required
 dist: trusty
+build: edge
 language: php
 
 cache:
