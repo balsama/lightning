@@ -117,17 +117,7 @@ class ComponentDiscovery {
    *   Array of extension objects for Lightning sub-components.
    */
   public function getSubComponents() {
-    $subComponents = [];
-    foreach ($this->getAll() as $extension) {
-      if (!in_array($extension, $this->getMainComponents())) {
-        foreach ($this->getMainComponents() as $mainComponent) {
-          if (strpos($extension->getPath(), $mainComponent->getPath()) === 0) {
-            $subComponents[$extension->getName()] = $extension;
-          }
-        }
-      }
-    }
-    return $subComponents;
+    return array_diff_key($this->getAll(), $this->getMainComponents());
   }
 
 }
