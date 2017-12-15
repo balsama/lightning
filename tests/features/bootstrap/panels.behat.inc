@@ -304,7 +304,7 @@ class PanelsSubContext extends DrupalSubContextBase {
     $victory = $session->wait(10000, 'Drupal.hasOwnProperty("panels_ipe") === true');
 
     if (empty($victory)) {
-      throw new ExpectationException('Expected Quick Edit to be disabled, but it is not.', $session->getDriver());
+      throw new ExpectationException('Expected Quick Edit to be enabled, but it is not.', $session->getDriver());
     }
   }
 
