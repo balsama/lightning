@@ -20,7 +20,7 @@ Feature: Integration of workflows with the In-Place Editor
     And I visit the edit form
     And I select "published" from "moderation_state[0][state]"
     And I press "Save"
-    Then Quick Edit should be enabled
+    Then IPE should be enabled
 
   @46d46379
   Scenario: IPE should be enabled on forward revisions
@@ -32,7 +32,7 @@ Feature: Integration of workflows with the In-Place Editor
     And I visit the edit form
     And I select "draft" from "moderation_state[0][state]"
     And I press "Save"
-    Then Quick Edit should be enabled
+    Then IPE should be enabled
 
   @66d946c7
   Scenario: IPE should be disabled for published content that has unpublished edits
@@ -45,4 +45,4 @@ Feature: Integration of workflows with the In-Place Editor
     And I select "draft" from "moderation_state[0][state]"
     And I press "Save"
     And I click "View"
-    Then Quick Edit should be disabled
+    Then IPE should be disabled
