@@ -140,21 +140,8 @@ your environment, but generally you will not need to do this.
   API.
 * Some of the Lightning contributed media module listed above might not yet be
   compatible with the Core Media entity.
-* The Video Embed Field module, a dependency of Lightning Media, might report
-  that it is unsupported. We're working with the module maintainer to remove
-  this warning.
 * Using the bulk upload feature in environments with a load balancer might
   result in some images not being saved.
-
-### Workflow
-* Lightning Workflow is based on Workbench Moderation, which is incompatible
-  with the experimental Content Moderation module included with Drupal core
-  8.3.0 and later and serves the same purpose as Workbench Moderation. We plan
-  to seamlessly migrate Lightning Workflow to Content Moderation once it is
-  ready and an update path exists (see [Issue #2863059](https://www.drupal.org/node/2863059)
-  for more information). But for now, installing Content Moderation alongside
-  Lightning Workflow may have unpredictable and dangerous effects, an is best
-  avoided.
   
 ### Inherited profiles
 Neither Drush nor Drupal Console are aware of the concept of inherited profiles

@@ -13,10 +13,10 @@ php:
   - 7.0.22
 env:
   - VERSION=HEAD
+  - VERSION=2.2.5
+  - VERSION=2.2.4
   - VERSION=2.2.3
   - VERSION=2.2.2
-  - VERSION=2.2.1
-  - VERSION=2.2.0
 
 addons:
   apt:
@@ -53,7 +53,7 @@ before_install:
 install:
   # Add Composer's local bin directory to the PATH so that we will be running
   # our installed versions of Drush, PHPCS, Behat, PhantomJS, etc.
-  - export PATH="$HOME/.composer/vendor/bin:$TRAVIS_BUILD_DIR/bin:$PATH"
+  - export PATH="$HOME/.composer/vendor/bin:$TRAVIS_BUILD_DIR/vendor/bin:$PATH"
 
   # composer install should fail on bad patches.
   - export COMPOSER_EXIT_ON_PATCH_FAILURE=1
@@ -87,10 +87,9 @@ before_script:
 script:
   - composer validate composer.json --no-check-all --ansi --no-interaction
   - cd docroot
-  #- phpunit --configuration ./core --group lightning
-  - sleep 5
+  - phpunit --configuration ./core --group lightning,profiles
   - cd ..
-  - bin/robo test:behat -- --tags=test
+  - robo test:behat -- --stop-on-failure
 
 after_failure:
   - cd docroot
